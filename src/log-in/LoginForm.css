@@ -1,0 +1,112 @@
+.login-container {
+    position: fixed;                /* фиксируем на весь экран */
+    top: 0;
+    left: 0;
+    width: 100vw;                   /* вся ширина окна */
+    height: 100vh;                  /* вся высота окна */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00263a;
+    overflow: hidden;              /* убирает скролл */
+}
+
+.login-form {
+    background-color: #001f33;
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;               /* не больше 400px */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.login-form input {
+    margin-bottom: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: #e3ecff;
+    color: #001;
+    font-size: 14px;
+}
+
+.login-form input::placeholder {
+    color: #555;
+}
+
+.login-form button {
+    padding: 12px;
+    background-color: #00acc1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 172, 193, 0.4);
+    transition: all 0.2s ease-in-out;
+}
+
+.login-form button:hover {
+    background-color: #0097a7;
+}
+
+.login-form button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 172, 193, 0.4);
+}
+
+.login-form .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.login-form .actions a {
+    color: #80deea;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.avatar-icon {
+    width: 60px;
+    height: 60px;
+    background: url('https://img.icons8.com/ios-filled/100/ffffff/user.png') center/contain no-repeat;
+    margin: 0 auto 20px auto;
+}
+
+.error-text {
+    color: #ff4d4f;
+    background-color: rgba(255, 77, 79, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ff4d4f;
+}
+
+.register-link {
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.register-link a {
+    color: #80deea;
+    text-decoration: underline;
+    margin-left: 5px;
+}
+
+.register-link span {
+    color: #cccccc;
+    font-weight: 500;
+}
+
+.login-form h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
