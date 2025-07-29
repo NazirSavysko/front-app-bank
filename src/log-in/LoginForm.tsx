@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import "./LoginForm.css";
 
 /**
- * Login form component. It accepts callbacks for a successful login as well
- * as handlers for navigating to registration and password reset screens.
+ * Login form component. It accepts callbacks for a successful login
+ * as well as handlers for navigating to registration and password reset screens.
  */
 export interface LoginFormProps {
-    /** Called when the user has successfully logged in */
-    onLogin: () => void;
+    /**
+     * Called when the user has successfully logged in.
+     * Provides the role returned from the API (e.g. 'ADMIN' or 'USER') so
+     * that the parent component can redirect accordingly.
+     */
+    onLogin: (role: string) => void;
     /** Navigate to the registration form */
     onRegisterLink: () => void;
     /** Navigate to the forgot password form */
@@ -24,7 +28,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
         setError("");
 
         try {
-            // When using Vite's dev server proxy the API calls through `/api`
+            // Call through proxy (/api) configured in vite.config.ts
             const res = await fetch(`/api/log-in`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -48,7 +52,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
             // Save token and role for future requests
             localStorage.setItem("accessToken", data.token);
             localStorage.setItem("role", data.role);
-            onLogin();
+            // Pass the role back up for redirect
+            onLogin(data.role);
         } catch {
             setError("❌ Помилка з’єднання з сервером");
         }
@@ -78,7 +83,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
                 />
 
                 <div className="actions">
-                    {/* Trigger navigation to forgot password form */}
                     <a
                         onClick={(e) => {
                             e.preventDefault();
@@ -93,7 +97,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
 
                 <div className="register-link">
                     <span>Немає акаунту?</span>
-                    {/* Trigger navigation to registration form */}
                     <a
                         onClick={(e) => {
                             e.preventDefault();

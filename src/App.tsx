@@ -7,16 +7,24 @@ import { ForgotPasswordForm } from './ForgotPasswordForm';
 
 /**
  * Top level application component. Controls navigation between login,
- * registration, email verification and password reset screens. After a
- * successful login the user is greeted with a simple welcome message.
+ * registration, email verification and password reset screens.
+ * After a successful login redirects user by role.
  */
 function App() {
-    type Page = 'login' | 'register' | 'verify' | 'forgot' | 'welcome';
+    type Page = 'login' | 'register' | 'verify' | 'forgot' | 'user' | 'admin';
     const [page, setPage] = useState<Page>('login');
     const [emailToVerify, setEmailToVerify] = useState('');
 
-    const handleLoginSuccess = () => {
-        setPage('welcome');
+    /**
+     * After a successful login we receive the user's role from the login form.
+     * Depending on the role we redirect to different dashboards.
+     */
+    const handleLoginSuccess = (role: string) => {
+        if (role && role.toUpperCase().includes('ADMIN')) {
+            setPage('admin');
+        } else {
+            setPage('user');
+        }
     };
 
     const handleRegisterComplete = (email: string) => {
@@ -25,12 +33,10 @@ function App() {
     };
 
     const handleVerificationSuccess = () => {
-        // After verifying email, direct the user back to the login form
         setPage('login');
     };
 
     const handleResetSuccess = () => {
-        // After resetting password, return to login
         setPage('login');
     };
 
@@ -62,9 +68,15 @@ function App() {
                     onReset={handleResetSuccess}
                 />
             )}
-            {page === 'welcome' && (
+            {page === 'user' && (
                 <div className="welcome-message">
-                    <h1>👋 Вітаємо! Ви увійшли в систему</h1>
+                    <h1>👋 Вітаємо! Ви увійшли як користувач</h1>
+                </div>
+            )}
+            {page === 'admin' && (
+                <div className="welcome-message">
+                    <h1>🔐 Вітаємо! Ви увійшли як адміністратор</h1>
+                    <p>Тут може бути адміністративна панель.</p>
                 </div>
             )}
         </>
