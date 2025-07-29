@@ -28,29 +28,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterComplete, 
         setError("");
         setLoading(true);
         try {
-            const baseUrl: string = (import.meta as any).env.VITE_API_URL || "";
-            const registerRes = await fetch(`${baseUrl}register`, {
+            const registerRes = await fetch(`/api/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ firstName, lastName, email, password, phoneNumber }),
             });
 
             if (!registerRes.ok) {
-                // Attempt to parse response body for error message
-                let data: any = {};
-                try {
-                    data = await registerRes.json();
-                } catch {
-                    // ignore JSON parse errors
-                }
-                const msg = data.message || "Помилка реєстрації";
+                const body = await registerRes.json().catch(() => ({} as { message?: string }));
+                const msg = body.message || "Помилка реєстрації";
                 setError(`❌ ${msg}`);
                 setLoading(false);
                 return;
             }
 
             // Send email verification code
-            const sendRes = await fetch(`${baseUrl}email/send`, {
+            const sendRes = await fetch(`/api/email/send`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),

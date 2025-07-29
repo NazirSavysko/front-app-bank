@@ -24,9 +24,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
         setError("");
 
         try {
-            // Use VITE_API_URL to build the endpoint base. Fallback to root if undefined.
-            const baseUrl: string = import.meta.env.VITE_API_URL || "";
-            const res = await fetch(`${baseUrl}log-in`, {
+            // When using Vite's dev server proxy the API calls through `/api`
+            const res = await fetch(`/api/log-in`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),

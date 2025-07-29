@@ -27,20 +27,14 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({ email, onVerif
         setMessage("");
         setLoading(true);
         try {
-            const baseUrl: string = (import.meta as any).env.VITE_API_URL || "";
-            const res = await fetch(`${baseUrl}email/check`, {
+            const res = await fetch(`/api/email/check`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, code }),
             });
             if (!res.ok) {
-                let data: any = {};
-                try {
-                    data = await res.json();
-                } catch {
-                    // no body
-                }
-                const msg = data.message || "Код підтвердження електронної пошти недійсний";
+                const body = await res.json().catch(() => ({} as { message?: string }));
+                const msg = body.message || "Код підтвердження електронної пошти недійсний";
                 setError(`❌ ${msg}`);
                 setLoading(false);
                 return;
@@ -62,8 +56,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({ email, onVerif
         setMessage("");
         setLoading(true);
         try {
-            const baseUrl: string = (import.meta as any).env.VITE_API_URL || "";
-            const res = await fetch(`${baseUrl}email/send`, {
+            const res = await fetch(`/api/email/send`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
