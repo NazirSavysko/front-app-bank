@@ -4,6 +4,7 @@ import { LoginForm } from './log-in/LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { VerifyEmailForm } from './VerifyEmailForm';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
+import { UserDashboard } from './UserDashboard';
 
 /**
  * Top level application component. Controls navigation between login,
@@ -15,10 +16,7 @@ function App() {
     const [page, setPage] = useState<Page>('login');
     const [emailToVerify, setEmailToVerify] = useState('');
 
-    /**
-     * After a successful login we receive the user's role from the login form.
-     * Depending on the role we redirect to different dashboards.
-     */
+    /** Redirect based on role from backend */
     const handleLoginSuccess = (role: string) => {
         if (role && role.toUpperCase().includes('ADMIN')) {
             setPage('admin');
@@ -68,11 +66,7 @@ function App() {
                     onReset={handleResetSuccess}
                 />
             )}
-            {page === 'user' && (
-                <div className="welcome-message">
-                    <h1>👋 Вітаємо! Ви увійшли як користувач</h1>
-                </div>
-            )}
+            {page === 'user' && <UserDashboard />}
             {page === 'admin' && (
                 <div className="welcome-message">
                     <h1>🔐 Вітаємо! Ви увійшли як адміністратор</h1>

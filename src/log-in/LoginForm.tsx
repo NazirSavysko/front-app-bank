@@ -28,7 +28,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
         setError("");
 
         try {
-            // Call through proxy (/api) configured in vite.config.ts
+            // Запрос к серверу идёт через proxy /api (см. vite.config.ts)
             const res = await fetch(`/api/log-in`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
             const data = await res.json();
 
             if (!res.ok) {
-                // Show specific error messages based on backend response
+                // Показать конкретное сообщение от бэка, если оно есть
                 if (data.message?.includes("Пароль") || data.message?.includes("електронної пошти")) {
                     setError(data.message);
                 } else if (data.message?.includes("Некоректний пароль")) {
@@ -49,10 +49,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, o
                 return;
             }
 
-            // Save token and role for future requests
+            // Сохранить токен и роль и передать роль наверх
             localStorage.setItem("accessToken", data.token);
             localStorage.setItem("role", data.role);
-            // Pass the role back up for redirect
             onLogin(data.role);
         } catch {
             setError("❌ Помилка з’єднання з сервером");

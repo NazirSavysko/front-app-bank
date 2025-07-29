@@ -1,0 +1,376 @@
+/* Общие стили */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #001f33;
+    color: #e0eafc;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #00263a;
+    color: #e0eafc;
+    padding: 10px 20px;
+    border-bottom: 1px solid #003b5c;
+    height: 60px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0073a8;
+    color: #e0eafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-sidebar {
+    width: 220px;
+    padding: 20px;
+    background-color: #00263a;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-sidebar button {
+    padding: 10px 15px;
+    margin: 5px 0;
+    border: none;
+    background-color: #003b5c;
+    color: #e0eafc;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.nav-sidebar button:hover {
+    background-color: #00507d;
+}
+
+.nav-sidebar button.active {
+    background-color: #0073a8;
+}
+
+.content-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Список карт */
+.accounts-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.account-card {
+    background-color: #002f4b;
+    border-radius: 16px;
+    padding: 0;
+    width: 100%;
+    max-width: 520px;
+    color: #e0eafc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.account-card .card-display {
+    position: relative;
+    background: linear-gradient(135deg, #0073a8, #004a7f);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 20px;
+    color: #ffffff;
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.account-card .bank-name {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+.account-card .card-number-display {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.account-card .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.card-cvv-display {
+    font-size: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.account-card .card-info {
+    padding: 15px 20px;
+    background-color: #003b5c;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.account-card .card-balance,
+.account-card .card-status {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.account-card .account-number {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+/* Списки транзакций и платежей */
+.transactions-list .account-transactions,
+.payments-list .account-payments {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #002f4b;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.account-transactions h3,
+.account-payments h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #80deea;
+}
+
+.transaction-item,
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #004a72;
+    font-size: 14px;
+}
+
+.transaction-item:last-child,
+.payment-item:last-child {
+    border-bottom: none;
+}
+
+.transfers-placeholder {
+    padding: 20px;
+    font-size: 16px;
+    color: #cccccc;
+}
+
+/* Панель фильтрации */
+.transactions-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.transactions-filter select,
+.transactions-filter input {
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #004a72;
+    color: #e0eafc;
+    font-size: 14px;
+}
+
+/* Выделение выбранной карты */
+.account-wrapper {
+    cursor: pointer;
+    border-radius: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.account-wrapper.selected {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 255, 255, 0.3);
+}
+
+/* Placeholder "Додати рахунок" */
+.account-wrapper.add-card .account-card.add-account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 60, 100, 0.5);
+    border: 2px dashed #80deea;
+    color: #80deea;
+    padding: 30px 20px;
+    height: auto;
+    width: 100%;
+    max-width: 520px;
+    min-height: 240px;
+}
+
+.plus-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+/* Профильная панель */
+.profile-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #002f4b;
+    color: #e0eafc;
+    padding: 20px;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.profile-panel.show {
+    transform: translateX(0);
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #0073a8;
+    color: #e0eafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.profile-panel h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #80deea;
+}
+
+.profile-panel p {
+    margin: 8px 0;
+    word-break: break-all;
+}
+
+.close-profile {
+    margin-top: 20px;
+    padding: 8px 12px;
+    background-color: #004d73;
+    color: #80deea;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.close-profile:hover {
+    background-color: #006c99;
+}
+
+/* Toast-уведомление */
+.copy-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #004d73;
+    color: #80deea;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 2000;
+}
+
+/* Модальный оверлей и форма добавления */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.add-account-modal {
+    background-color: #002f4b;
+    padding: 20px;
+    border-radius: 12px;
+    color: #e0eafc;
+    width: 320px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.add-account-modal h3 {
+    margin-top: 0;
+    color: #80deea;
+    margin-bottom: 10px;
+}
+
+.add-account-modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.add-account-modal select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    margin-top: 5px;
+    background-color: #004a72;
+    color: #e0eafc;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #004d73;
+    color: #80deea;
+}
+
+.modal-buttons button:hover {
+    background-color: #006c99;
+}
