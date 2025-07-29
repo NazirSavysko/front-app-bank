@@ -1,14 +1,16 @@
+/* Styles for login form and related forms */
+
 .login-container {
-    position: fixed;                /* фиксируем на весь экран */
+    position: fixed;                /* cover the entire screen */
     top: 0;
     left: 0;
-    width: 100vw;                   /* вся ширина окна */
-    height: 100vh;                  /* вся высота окна */
+    width: 100vw;                   /* full viewport width */
+    height: 100vh;                  /* full viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #00263a;
-    overflow: hidden;              /* убирает скролл */
+    overflow: hidden;              /* remove scroll */
 }
 
 .login-form {
@@ -16,7 +18,7 @@
     padding: 40px;
     border-radius: 20px;
     width: 90%;
-    max-width: 400px;               /* не больше 400px */
+    max-width: 400px;               /* limit width */
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -68,6 +70,7 @@
     color: #80deea;
     font-size: 12px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .avatar-icon {
@@ -98,6 +101,7 @@
     color: #80deea;
     text-decoration: underline;
     margin-left: 5px;
+    cursor: pointer;
 }
 
 .register-link span {

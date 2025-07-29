@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
 
-export const LoginForm: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+/**
+ * Login form component. It accepts callbacks for a successful login as well
+ * as handlers for navigating to registration and password reset screens.
+ */
+export interface LoginFormProps {
+    /** Called when the user has successfully logged in */
+    onLogin: () => void;
+    /** Navigate to the registration form */
+    onRegisterLink: () => void;
+    /** Navigate to the forgot password form */
+    onForgotLink: () => void;
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onRegisterLink, onForgotLink }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -11,7 +24,9 @@ export const LoginForm: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         setError("");
 
         try {
-            const res = await fetch(`http://localhost:8080/api/v1/log-in`, {
+            // Use VITE_API_URL to build the endpoint base. Fallback to root if undefined.
+            const baseUrl: string = import.meta.env.VITE_API_URL || "";
+            const res = await fetch(`${baseUrl}log-in`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -20,6 +35,7 @@ export const LoginForm: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             const data = await res.json();
 
             if (!res.ok) {
+                // Show specific error messages based on backend response
                 if (data.message?.includes("Пароль") || data.message?.includes("електронної пошти")) {
                     setError(data.message);
                 } else if (data.message?.includes("Некоректний пароль")) {
@@ -30,6 +46,7 @@ export const LoginForm: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 return;
             }
 
+            // Save token and role for future requests
             localStorage.setItem("accessToken", data.token);
             localStorage.setItem("role", data.role);
             onLogin();
@@ -62,14 +79,30 @@ export const LoginForm: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 />
 
                 <div className="actions">
-                    <a href="/forgot-password">Забули пароль?</a>
+                    {/* Trigger navigation to forgot password form */}
+                    <a
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onForgotLink();
+                        }}
+                    >
+                        Забули пароль?
+                    </a>
                 </div>
 
                 <button type="submit">УВІЙТИ</button>
 
                 <div className="register-link">
                     <span>Немає акаунту?</span>
-                    <a href="/register">Зареєструватися</a>
+                    {/* Trigger navigation to registration form */}
+                    <a
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onRegisterLink();
+                        }}
+                    >
+                        Зареєструватися
+                    </a>
                 </div>
             </form>
         </div>
