@@ -149,7 +149,7 @@
     cursor: pointer;
 }
 
-/* Списки транзакций и платежей */
+/* Списки транзакций и платежей — карточный вид */
 .transactions-list .account-transactions,
 .payments-list .account-payments {
     margin-bottom: 20px;
@@ -159,33 +159,77 @@
     width: 100%;
 }
 
-.account-transactions h3,
-.account-payments h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #80deea;
+/* Скрываем старые элементы списка */
+.transaction-item {
+    display: none;
 }
 
-.transaction-item,
-.payment-item {
+/* Карточка транзакции */
+.transaction-card {
+    background-color: #002f4b;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    color: #e0eafc;
     display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #004a72;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Заголовок: стрелка + сумма */
+.transaction-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.transaction-header .arrow {
+    font-size: 24px;
+}
+
+/* Тело: получатель, отправитель, описание */
+.transaction-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
     font-size: 14px;
 }
 
-.transaction-item:last-child,
-.payment-item:last-child {
-    border-bottom: none;
+.transaction-body div {
+    flex: 1 1 120px;
+    word-break: break-word;
 }
 
-.transfers-placeholder {
-    padding: 20px;
-    font-size: 16px;
-    color: #cccccc;
+/* Футер: статус + дата */
+.transaction-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+    opacity: 0.8;
 }
 
+/* Статус */
+.status {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status.complete {
+    background-color: #007f46; /* зелёный */
+    color: #ffffff;
+}
+
+.status.cancelled {
+    background-color: #bf1e2e; /* красный */
+    color: #ffffff;
+}
 /* Панель фильтрации */
 .transactions-filter {
     display: flex;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './UserDashboard.css';
 
 interface Account {
@@ -50,11 +50,11 @@ interface AccountCardProps {
  * Account card: shows masked/unmasked card number, CVV and account number.
  * Copies numbers to clipboard on click, auto-hides after 5 seconds.
  */
-const AccountCard: React.FC<AccountCardProps> = ({ account, onCopy }) => {
+const AccountCard: React.FC<AccountCardProps> = ({account, onCopy}) => {
     const [showCvv, setShowCvv] = useState(false);
     const [showNumber, setShowNumber] = useState(false);
     const [showAccountNumber, setShowAccountNumber] = useState(false);
-    const { card } = account;
+    const {card} = account;
 
     const formatCardNumber = (num: string) => num.replace(/(\d{4})(?=\d)/g, '$1 ');
     const maskCardNumber = (num: string) => `**** **** **** ${num.slice(-4)}`;
@@ -115,9 +115,9 @@ const AccountCard: React.FC<AccountCardProps> = ({ account, onCopy }) => {
                     {showNumber ? formatCardNumber(card.cardNumber) : maskCardNumber(card.cardNumber)}
                 </div>
                 <div className="card-footer">
-                    <div style={{ marginLeft: 'auto' }}>
-                        <span style={{ fontSize: '8px', display: 'block', opacity: 0.8 }}>VALID THRU</span>
-                        <span style={{ fontSize: '14px' }}>{formatExpDate(card.expirationDate)}</span>
+                    <div style={{marginLeft: 'auto'}}>
+                        <span style={{fontSize: '8px', display: 'block', opacity: 0.8}}>VALID THRU</span>
+                        <span style={{fontSize: '14px'}}>{formatExpDate(card.expirationDate)}</span>
                     </div>
                 </div>
                 <div
@@ -134,7 +134,8 @@ const AccountCard: React.FC<AccountCardProps> = ({ account, onCopy }) => {
                     className="account-number"
                     onClick={handleAccountClick}
                 >
-                    Номер рахунку: {showAccountNumber ? account.accountNumber : maskAccountNumber(account.accountNumber)}
+                    Номер
+                    рахунку: {showAccountNumber ? account.accountNumber : maskAccountNumber(account.accountNumber)}
                 </div>
             </div>
         </div>
@@ -217,7 +218,7 @@ export const UserDashboard: React.FC = () => {
                     'Content-Type': 'application/json',
                     Authorization: token ? `Bearer ${token}` : '',
                 },
-                body: JSON.stringify({ accountType: newAccountType }),
+                body: JSON.stringify({accountType: newAccountType}),
             });
             if (!res.ok) {
                 const body = await res.json().catch(() => ({} as { message?: string }));
@@ -330,17 +331,50 @@ export const UserDashboard: React.FC = () => {
                 </div>
                 <div className="account-transactions">
                     <h3>Транзакції для рахунку {acc.accountNumber.slice(-4)}</h3>
+
                     {filtered.length > 0 ? (
-                        <ul>
-                            {filtered.map((tr, idx) => (
-                                <li key={idx} className="transaction-item">
-                                    <span>{new Date(tr.transactionDate).toLocaleString()}</span>
-                                    <span>{tr.amount.toLocaleString()} {tr.currencyCode}</span>
-                                    <span>{tr.description}</span>
-                                    <span>{tr.status}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        <>
+                            {filtered.map((tr, idx) => {
+                                const isIncoming = tr.status === 'COMPLETED';
+                                const arrow = isIncoming ? '↓' : '↑';
+                                const statusLabel = isIncoming ? 'Завершено' : 'Скасовано';
+
+                                return (
+                                    <div key={idx} className="transaction-card">
+                                        <div className="transaction-header">
+                                            <span className="arrow">{arrow}</span>
+                                            <span>
+              {isIncoming ? 'Вхід' : 'Вихід'} — {tr.amount.toLocaleString()} {tr.currencyCode}
+            </span>
+                                        </div>
+
+                                        <div className="transaction-body">
+                                            <div>
+                                                <strong>Отримувач:</strong> {tr.receiver.firstName} {tr.receiver.lastName}
+                                            </div>
+                                            <div>
+                                                <strong>Відправник:</strong> {tr.sender.firstName} {tr.sender.lastName}
+                                            </div>
+                                            <div style={{flexBasis: '100%'}}>
+                                                <strong>Опис:</strong> {tr.description}
+                                            </div>
+                                        </div>
+
+                                        <div className="transaction-footer">
+            <span className={`status ${isIncoming ? 'complete' : 'cancelled'}`}>
+              {statusLabel}
+            </span>
+                                            <span>
+              Дата: {new Date(tr.transactionDate).toLocaleString('uk-UA', {
+                                                day: '2-digit', month: '2-digit', year: 'numeric',
+                                                hour: '2-digit', minute: '2-digit'
+                                            })}
+            </span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </>
                     ) : (
                         <p>Немає транзакцій за вибраними параметрами</p>
                     )}
@@ -395,10 +429,18 @@ export const UserDashboard: React.FC = () => {
 
             <div className="dashboard-container">
                 <aside className="nav-sidebar">
-                    <button className={selectedTab === 'accounts' ? 'active' : ''} onClick={() => setSelectedTab('accounts')}>Акаунти</button>
-                    <button className={selectedTab === 'transactions' ? 'active' : ''} onClick={() => setSelectedTab('transactions')}>Транзакції</button>
-                    <button className={selectedTab === 'payments' ? 'active' : ''} onClick={() => setSelectedTab('payments')}>Платежі</button>
-                    <button className={selectedTab === 'transfers' ? 'active' : ''} onClick={() => setSelectedTab('transfers')}>Перекази</button>
+                    <button className={selectedTab === 'accounts' ? 'active' : ''}
+                            onClick={() => setSelectedTab('accounts')}>Акаунти
+                    </button>
+                    <button className={selectedTab === 'transactions' ? 'active' : ''}
+                            onClick={() => setSelectedTab('transactions')}>Транзакції
+                    </button>
+                    <button className={selectedTab === 'payments' ? 'active' : ''}
+                            onClick={() => setSelectedTab('payments')}>Платежі
+                    </button>
+                    <button className={selectedTab === 'transfers' ? 'active' : ''}
+                            onClick={() => setSelectedTab('transfers')}>Перекази
+                    </button>
                 </aside>
                 <main className="content-area">
                     {loading && <p>Завантаження...</p>}
@@ -440,7 +482,8 @@ export const UserDashboard: React.FC = () => {
                         <h3>Створити рахунок</h3>
                         <label>
                             Тип валюти:
-                            <select value={newAccountType} onChange={(e) => setNewAccountType((e.target as HTMLSelectElement).value)}>
+                            <select value={newAccountType}
+                                    onChange={(e) => setNewAccountType((e.target as HTMLSelectElement).value)}>
                                 <option value="UAH">UAH</option>
                                 <option value="USD">USD</option>
                                 <option value="EUR">EUR</option>
