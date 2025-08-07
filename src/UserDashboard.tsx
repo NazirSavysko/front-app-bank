@@ -613,13 +613,7 @@ export const UserDashboard: React.FC = () => {
                         {customer ? `${customer.firstName.charAt(0)}${customer.lastName.charAt(0)}`.toUpperCase() : 'U'}
                     </div>
                     <h3>Профіль користувача</h3>
-                    <button
-                        className="modal-close"
-                        onClick={() => setShowProfile(false)}
-                        aria-label="Закрити профіль"
-                    >
-                        ×
-                    </button>
+                    {/* Убрали кнопку с крестиком */}
                 </div>
                 <div className="profile-content">
                     {customer && (
