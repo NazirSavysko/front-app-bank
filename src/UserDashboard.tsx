@@ -17,13 +17,14 @@ interface Account {
 
 interface Transaction {
     sender: { firstName: string; lastName: string };
-    receiver: { firstName: string; lastName: string; accountNumber: string };
+    receiver: { firstName: string; lastName: string; accountNumber?: string };
     amount: number;
     description: string;
     transactionDate: string;
     transactionType: string;
     currencyCode: string;
     status: string;
+    isReverser: boolean;
 }
 
 interface Payment {
@@ -357,10 +358,9 @@ export const UserDashboard: React.FC = () => {
         }
         if (filterType !== 'all') {
             filtered = filtered.filter(tr => {
-                const isSent =
-                    tr.sender.firstName === customer.firstName &&
-                    tr.sender.lastName === customer.lastName;
-                return filterType === 'sent' ? isSent : !isSent;
+                // Используем поле isReverser для определения направления транзакции
+                const isIncoming = tr.isReverser;
+                return filterType === 'sent' ? !isIncoming : isIncoming;
             });
         }
         // Sort descending by date
@@ -420,10 +420,10 @@ export const UserDashboard: React.FC = () => {
                     {filtered.length > 0 ? (
                         <>
                             {filtered.map((tr, idx) => {
-                                // Определяем, является ли это входящей транзакцией
-                                // Проверяем по номеру аккаунта получателя
-                                const currentAccountNumber = acc.accountNumber;
-                                const isIncoming = tr.receiver.accountNumber === currentAccountNumber;
+                                // Определяем направление транзакции по полю isReverser
+                                // isReverser: true = входящая транзакция (текущий пользователь - получатель)
+                                // isReverser: false = исходящая транзакция (текущий пользователь - отправитель)
+                                const isIncoming = tr.isReverser;
                                 const arrow = isIncoming ? '↓' : '↑';
                                 const statusLabel = tr.status === 'COMPLETED' ? 'Завершено' : 'Скасовано';
                                 const transactionType = isIncoming ? 'incoming' : 'outgoing';
