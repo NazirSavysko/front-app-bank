@@ -1086,99 +1086,99 @@
     .user-dashboard {
         padding: 0.25rem;
     }
-
+    
     .dashboard-content {
         gap: 0.75rem;
     }
-
+    
     .dashboard-header {
         padding: 0.75rem;
         border-radius: 8px;
     }
-
+    
     .dashboard-title {
         font-size: 1.1rem;
     }
-
+    
     .dashboard-subtitle {
         font-size: 0.8rem;
     }
-
+    
     .tab-button {
         padding: 0.6rem 0.75rem;
         font-size: 0.8rem;
     }
-
+    
     .account-wrapper {
         flex: 0 0 250px;
     }
-
+    
     .account-card {
         padding: 1rem;
         min-height: 280px;
     }
-
+    
     .card-display {
         padding: 0.75rem;
         min-height: 140px;
     }
-
+    
     .bank-name {
         font-size: 0.9rem;
     }
-
+    
     .card-number-display {
         font-size: 1rem;
         margin: 0.5rem 0;
     }
-
+    
     .card-balance {
         font-size: 1.1rem;
     }
-
+    
     .dashboard-section {
         padding: 0.75rem;
     }
-
+    
     .section-title {
         font-size: 1.1rem;
     }
-
+    
     .transactions-filter {
         grid-template-columns: 1fr;
         gap: 0.5rem;
         padding: 0.75rem;
     }
-
+    
     .transaction-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
         padding: 0.75rem;
     }
-
+    
     .transaction-amount {
         align-self: flex-end;
     }
-
+    
     .btn {
         padding: 0.75rem 1rem;
         font-size: 0.85rem;
     }
-
+    
     .modal-content {
         padding: 1rem;
         margin: 0.5rem;
     }
-
+    
     .modal-title {
         font-size: 1.1rem;
     }
-
+    
     .modal-footer {
         flex-direction: column;
     }
-
+    
     .form-input,
     .form-select,
     .form-textarea {
@@ -1191,24 +1191,24 @@
     .user-dashboard {
         padding: 0.5rem;
     }
-
+    
     .dashboard-content {
         gap: 1rem;
     }
-
+    
     .account-wrapper {
         flex: 0 0 270px;
     }
-
+    
     .transactions-filter {
         grid-template-columns: repeat(2, 1fr);
     }
-
+    
     .transaction-item {
         flex-direction: row;
         align-items: center;
     }
-
+    
     .modal-footer {
         flex-direction: row;
     }
@@ -1219,35 +1219,35 @@
     .user-dashboard {
         padding: 1rem;
     }
-
+    
     .dashboard-content {
         gap: 1.25rem;
     }
-
+    
     .dashboard-header {
         padding: 1.25rem;
     }
-
+    
     .dashboard-title {
         font-size: 1.5rem;
     }
-
+    
     .dashboard-subtitle {
         font-size: 0.95rem;
     }
-
+    
     .account-wrapper {
         flex: 0 0 300px;
     }
-
+    
     .dashboard-section {
         padding: 1.25rem;
     }
-
+    
     .transactions-filter {
         grid-template-columns: repeat(3, 1fr);
     }
-
+    
     .dashboard-grid {
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     }
@@ -1258,35 +1258,35 @@
     .user-dashboard {
         padding: 1.5rem;
     }
-
+    
     .dashboard-content {
         gap: 1.5rem;
     }
-
+    
     .dashboard-header {
         padding: 1.5rem;
     }
-
+    
     .dashboard-title {
         font-size: 1.8rem;
     }
-
+    
     .account-wrapper {
         flex: 0 0 320px;
     }
-
+    
     .dashboard-section {
         padding: 1.5rem;
     }
-
+    
     .transactions-filter {
         grid-template-columns: repeat(4, 1fr);
     }
-
+    
     .dashboard-grid {
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     }
-
+    
     .profile-panel {
         width: 400px;
     }
@@ -1297,23 +1297,23 @@
     .user-dashboard {
         padding: 2rem;
     }
-
+    
     .dashboard-content {
         gap: 2rem;
     }
-
+    
     .dashboard-header {
         padding: 2rem;
     }
-
+    
     .dashboard-title {
         font-size: 2rem;
     }
-
+    
     .account-wrapper {
         flex: 0 0 350px;
     }
-
+    
     .dashboard-section {
         padding: 2rem;
     }
@@ -1324,24 +1324,24 @@
     .user-dashboard {
         padding: 0.5rem;
     }
-
+    
     .dashboard-header {
         padding: 0.75rem;
     }
-
+    
     .dashboard-title {
         font-size: 1.2rem;
     }
-
+    
     .account-card {
         min-height: 200px;
     }
-
+    
     .card-display {
         min-height: 100px;
         padding: 0.75rem;
     }
-
+    
     .modal-content {
         max-height: 80vh;
     }
@@ -1352,24 +1352,24 @@
     .user-dashboard {
         background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
     }
-
+    
     .dashboard-header,
     .account-card,
     .dashboard-section {
         background: rgba(45, 55, 72, 0.95);
         color: #e2e8f0;
     }
-
+    
     .dashboard-title,
     .section-title {
         color: #e2e8f0;
     }
-
+    
     .dashboard-subtitle,
     .card-status {
         color: #a0aec0;
     }
-
+    
     .form-input,
     .form-select,
     .form-textarea,
@@ -1379,7 +1379,7 @@
         border-color: #4a5568;
         color: #e2e8f0;
     }
-
+    
     .transaction-item:hover {
         background-color: rgba(255, 255, 255, 0.05);
     }
@@ -1406,7 +1406,7 @@ html {
     .transactions-list::-webkit-scrollbar {
         display: none;
     }
-
+    
     .accounts-list,
     .transactions-list {
         scrollbar-width: none;
