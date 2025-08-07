@@ -289,14 +289,18 @@
 /* Панель фильтрации транзакций */
 .transactions-filter {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background: #f7fafc;
-    border-radius: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+/* Группа фильтров */
 .filter-group {
     display: flex;
     flex-direction: column;
@@ -304,28 +308,32 @@
 }
 
 .filter-label {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: #4a5568;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
 }
 
-.filter-input,
-.filter-select {
-    padding: 0.6rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    background: white;
-    transition: border-color 0.2s ease;
+.transactions-filter select,
+.transactions-filter input {
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.8);
+    color: #2d3748;
+    transition: all 0.3s ease;
 }
 
-.filter-input:focus,
-.filter-select:focus {
+.transactions-filter select:focus,
+.transactions-filter input:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
 }
 
 /* Список транзакций */
@@ -409,11 +417,82 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .transaction-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(31, 38, 135, 0.25);
+}
+
+/* Компактное состояние карточки транзакции */
+.transaction-card:not(.expanded) {
+    padding: 1rem 1.5rem;
+}
+
+.transaction-card:not(.expanded) .transaction-header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.transaction-card:not(.expanded) .transaction-footer {
+    padding-top: 0.5rem;
+    border-top: none;
+    margin-top: 0.5rem;
+}
+
+/* Развернутое состояние */
+.transaction-card.expanded {
+    padding: 1.5rem;
+}
+
+.transaction-card.expanded .transaction-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f7fafc;
+}
+
+.transaction-card.expanded .transaction-footer {
+    padding-top: 0.75rem;
+    border-top: 2px solid #f7fafc;
+    margin-top: 1rem;
+}
+
+/* Индикатор возможности клика */
+.transaction-card::after {
+    content: '▼';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #718096;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+}
+
+.transaction-card.expanded::after {
+    transform: rotate(180deg);
+    color: #667eea;
+}
+
+/* Анимация появления детальной информации */
+.transaction-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.transaction-card.expanded .transaction-body {
+    opacity: 1;
+    max-height: 200px;
+    margin-bottom: 1rem;
 }
 
 /* Заголовок транзакции */
@@ -957,63 +1036,68 @@
     margin: 1rem 0;
 }
 
-/* Транзакции - улучшенные стили */
-.transaction-item {
-    border-radius: 12px;
-    background: white;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.transaction-info h4 {
-    margin: 0 0 0.25rem 0;
+/* Кнопки */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 10px;
     font-size: 0.9rem;
-    color: #2d3748;
-}
-
-.transaction-details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.transaction-meta {
-    font-size: 0.8rem;
-    color: #718096;
-}
-
-/* Фильтры транзакций - улучшенные стили */
-.filter-group label {
-    display: block;
-    margin-bottom: 0.25rem;
-    font-size: 0.75rem;
     font-weight: 600;
-    color: #4a5568;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
-.account-selector {
-    grid-column: 1 / -1;
-    margin-bottom: 1rem;
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
 
-.account-selector label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(113, 128, 150, 0.1);
     color: #4a5568;
+    border: 1px solid rgba(113, 128, 150, 0.3);
 }
 
-.account-select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: white;
-    font-size: 0.9rem;
+.btn-secondary:hover {
+    background: rgba(113, 128, 150, 0.2);
     color: #2d3748;
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
 }
 
 /* Дополнительные адаптивные стили */

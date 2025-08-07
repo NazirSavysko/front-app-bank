@@ -143,6 +143,68 @@ const AccountCard: React.FC<AccountCardProps> = ({account, onCopy}) => {
 };
 
 /**
+ * Transaction card: shows transaction details with collapse/expand functionality.
+ */
+interface TransactionCardProps {
+    transaction: Transaction;
+    isIncoming: boolean;
+    arrow: string;
+    statusLabel: string;
+    transactionType: string;
+}
+
+const TransactionCard: React.FC<TransactionCardProps> = ({
+    transaction,
+    isIncoming,
+    arrow,
+    statusLabel,
+    transactionType,
+}) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+        <div
+            className={`transaction-card ${expanded ? 'expanded' : ''}`}
+            data-type={transactionType}
+            onClick={() => setExpanded(!expanded)}
+        >
+            <div className="transaction-header">
+                <span className="arrow">{arrow}</span>
+                <span>
+                    {isIncoming ? 'Надходження' : 'Витрати'} — {transaction.amount.toLocaleString()} {transaction.currencyCode}
+                </span>
+            </div>
+
+            {expanded && (
+                <div className="transaction-body">
+                    <div>
+                        <strong>Отримувач:</strong> {transaction.receiver.firstName} {transaction.receiver.lastName}
+                    </div>
+                    <div>
+                        <strong>Відправник:</strong> {transaction.sender.firstName} {transaction.sender.lastName}
+                    </div>
+                    <div style={{flexBasis: '100%'}}>
+                        <strong>Опис:</strong> {transaction.description}
+                    </div>
+                </div>
+            )}
+
+            <div className="transaction-footer">
+                <span className={`status ${transaction.status === 'COMPLETED' ? 'complete' : 'cancelled'}`}>
+                    {statusLabel}
+                </span>
+                <span>
+                    Дата: {new Date(transaction.transactionDate).toLocaleString('uk-UA', {
+                        day: '2-digit', month: '2-digit', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit'
+                    })}
+                </span>
+            </div>
+        </div>
+    );
+};
+
+/**
  * Main User Dashboard component.
  * Manages accounts, transactions with filters, payments, transfers, and profile panel.
  */
@@ -311,35 +373,46 @@ export const UserDashboard: React.FC = () => {
         return (
             <div className="transactions-list">
                 <div className="transactions-filter">
-                    {/* New account selector to choose which account to view transactions for */}
-                    <select
-                        value={selectedAccountIndex}
-                        onChange={(e) => setSelectedAccountIndex(Number(e.target.value))}
-                    >
-                        {customer.accounts.map((acc, idx) => (
-                            <option key={idx} value={idx}>
-                                {acc.accountNumber.slice(-4)}
-                            </option>
-                        ))}
-                    </select>
-                    <input
-                        type="date"
-                        value={filterStartDate}
-                        onChange={(e) => setFilterStartDate(e.target.value)}
-                    />
-                    <input
-                        type="date"
-                        value={filterEndDate}
-                        onChange={(e) => setFilterEndDate(e.target.value)}
-                    />
-                    <select
-                        value={filterType}
-                        onChange={(e) => setFilterType(e.target.value as 'all' | 'sent' | 'received')}
-                    >
-                        <option value="all">Всі</option>
-                        <option value="sent">Витрати</option>
-                        <option value="received">Надходження</option>
-                    </select>
+                    <div className="filter-group">
+                        <label className="filter-label">Рахунок:</label>
+                        <select
+                            value={selectedAccountIndex}
+                            onChange={(e) => setSelectedAccountIndex(Number(e.target.value))}
+                        >
+                            {customer.accounts.map((acc, idx) => (
+                                <option key={idx} value={idx}>
+                                    **** {acc.accountNumber.slice(-4)}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="filter-group">
+                        <label className="filter-label">Від дати:</label>
+                        <input
+                            type="date"
+                            value={filterStartDate}
+                            onChange={(e) => setFilterStartDate(e.target.value)}
+                        />
+                    </div>
+                    <div className="filter-group">
+                        <label className="filter-label">До дати:</label>
+                        <input
+                            type="date"
+                            value={filterEndDate}
+                            onChange={(e) => setFilterEndDate(e.target.value)}
+                        />
+                    </div>
+                    <div className="filter-group">
+                        <label className="filter-label">Тип:</label>
+                        <select
+                            value={filterType}
+                            onChange={(e) => setFilterType(e.target.value as 'all' | 'sent' | 'received')}
+                        >
+                            <option value="all">Всі транзакції</option>
+                            <option value="sent">Тільки витрати</option>
+                            <option value="received">Тільки надходження</option>
+                        </select>
+                    </div>
                 </div>
                 <div className="account-transactions">
                     <h3>Транзакції для рахунку {acc.accountNumber.slice(-4)}</h3>
@@ -356,42 +429,14 @@ export const UserDashboard: React.FC = () => {
                                 const transactionType = isIncoming ? 'incoming' : 'outgoing';
 
                                 return (
-                                    <div
+                                    <TransactionCard
                                         key={idx}
-                                        className="transaction-card"
-                                        data-type={transactionType}
-                                    >
-                                        <div className="transaction-header">
-                                            <span className="arrow">{arrow}</span>
-                                            <span>
-                                                {isIncoming ? 'Надходження' : 'Витрати'} — {tr.amount.toLocaleString()} {tr.currencyCode}
-                                            </span>
-                                        </div>
-
-                                        <div className="transaction-body">
-                                            <div>
-                                                <strong>Отримувач:</strong> {tr.receiver.firstName} {tr.receiver.lastName}
-                                            </div>
-                                            <div>
-                                                <strong>Відправник:</strong> {tr.sender.firstName} {tr.sender.lastName}
-                                            </div>
-                                            <div style={{flexBasis: '100%'}}>
-                                                <strong>Опис:</strong> {tr.description}
-                                            </div>
-                                        </div>
-
-                                        <div className="transaction-footer">
-                                            <span className={`status ${tr.status === 'COMPLETED' ? 'complete' : 'cancelled'}`}>
-                                                {statusLabel}
-                                            </span>
-                                            <span>
-                                                Дата: {new Date(tr.transactionDate).toLocaleString('uk-UA', {
-                                                    day: '2-digit', month: '2-digit', year: 'numeric',
-                                                    hour: '2-digit', minute: '2-digit'
-                                                })}
-                                            </span>
-                                        </div>
-                                    </div>
+                                        transaction={tr}
+                                        isIncoming={isIncoming}
+                                        arrow={arrow}
+                                        statusLabel={statusLabel}
+                                        transactionType={transactionType}
+                                    />
                                 );
                             })}
                         </>
