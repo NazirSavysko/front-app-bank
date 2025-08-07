@@ -1,420 +1,1415 @@
-/* Общие стили */
-.dashboard-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #001f33;
-    color: #e0eafc;
-}
-
-.top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #00263a;
-    color: #e0eafc;
-    padding: 10px 20px;
-    border-bottom: 1px solid #003b5c;
-    height: 60px;
-}
-
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #0073a8;
-    color: #e0eafc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-}
-
-.nav-sidebar {
-    width: 220px;
-    padding: 20px;
-    background-color: #00263a;
-    display: flex;
-    flex-direction: column;
-}
-
-.nav-sidebar button {
-    padding: 10px 15px;
-    margin: 5px 0;
-    border: none;
-    background-color: #003b5c;
-    color: #e0eafc;
-    cursor: pointer;
-    text-align: left;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-}
-
-.nav-sidebar button:hover {
-    background-color: #00507d;
-}
-
-.nav-sidebar button.active {
-    background-color: #0073a8;
-}
-
-.content-area {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-/* Список карт */
-.accounts-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-    align-items: flex-start;
-}
-
-.account-card {
-    background-color: #002f4b;
-    border-radius: 16px;
+/* Основные стили и сброс */
+* {
+    box-sizing: border-box;
+    margin: 0;
     padding: 0;
-    width: 100%;
-    max-width: 520px;
-    color: #e0eafc;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Контейнер дашборда */
+.user-dashboard {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Главный контент */
+.dashboard-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Заголовок */
+.dashboard-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+}
+
+.dashboard-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+.dashboard-subtitle {
+    font-size: 0.85rem;
+    color: #718096;
+    margin: 0.5rem 0 0 0;
+}
+
+/* Навигационные табы */
+.dashboard-tabs {
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 0.5rem;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-.account-card .card-display {
-    position: relative;
-    background: linear-gradient(135deg, #0073a8, #004a7f);
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    padding: 20px;
-    color: #ffffff;
-    min-height: 170px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.account-card .bank-name {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    opacity: 0.8;
-}
-
-.account-card .card-number-display {
-    font-size: 20px;
-    letter-spacing: 2px;
-    margin-top: 20px;
-    cursor: pointer;
-}
-
-.account-card .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    font-size: 12px;
-    margin-top: 10px;
-}
-
-.card-cvv-display {
-    font-size: 12px;
-    margin-top: 12px;
-    cursor: pointer;
-}
-
-.account-card .card-info {
-    padding: 15px 20px;
-    background-color: #003b5c;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-}
-
-.account-card .card-balance,
-.account-card .card-status {
-    margin-bottom: 6px;
-    font-size: 14px;
-}
-
-.account-card .account-number {
-    font-size: 12px;
-    margin-top: 4px;
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-/* Списки транзакций и платежей — карточный вид */
-.transactions-list .account-transactions,
-.payments-list .account-payments {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #002f4b;
-    border-radius: 8px;
-    width: 100%;
-}
-
-/* Скрываем старые элементы списка */
-.transaction-item {
+.dashboard-tabs::-webkit-scrollbar {
     display: none;
 }
 
-/* Карточка транзакции */
-.transaction-card {
-    background-color: #002f4b;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    color: #e0eafc;
+.tab-button {
+    flex: 1;
+    min-width: max-content;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #718096;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.tab-button:hover:not(.active) {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+/* Сетка для карточек и контента */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Список аккаунтов - горизонтальная прокрутка */
+.accounts-list {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(102, 126, 234, 0.3) transparent;
+}
+
+.accounts-list::-webkit-scrollbar {
+    height: 6px;
+}
+
+.accounts-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.accounts-list::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.3);
+    border-radius: 3px;
+}
+
+.account-wrapper {
+    flex: 0 0 280px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.account-wrapper:hover {
+    transform: scale(1.02);
+}
+
+.account-wrapper.selected .account-card {
+    border: 2px solid #667eea;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+/* Карточка аккаунта */
+.account-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
 
-/* Заголовок: стрелка + сумма */
-.transaction-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 18px;
-    font-weight: 500;
+.account-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(31, 38, 135, 0.3);
 }
 
-.transaction-header .arrow {
-    font-size: 24px;
-}
-
-/* Тело: получатель, отправитель, описание */
-.transaction-body {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    font-size: 14px;
-}
-
-.transaction-body div {
-    flex: 1 1 120px;
-    word-break: break-word;
-}
-
-/* Футер: статус + дата */
-.transaction-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
-    font-size: 12px;
-    opacity: 0.8;
-}
-
-/* Статус */
-.status {
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.status.complete {
-    background-color: #007f46; /* зелёный */
-    color: #ffffff;
-}
-
-.status.cancelled {
-    background-color: #bf1e2e; /* красный */
-    color: #ffffff;
-}
-/* Панель фильтрации */
-.transactions-filter {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.transactions-filter select,
-.transactions-filter input {
-    padding: 6px 8px;
-    border-radius: 4px;
-    border: none;
-    background-color: #004a72;
-    color: #e0eafc;
-    font-size: 14px;
-}
-
-/* Выделение выбранной карты */
-.account-wrapper {
-    cursor: pointer;
-    border-radius: 16px;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.account-wrapper.selected {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 255, 255, 0.3);
-}
-
-/* Placeholder "Додати рахунок" */
-.account-wrapper.add-card .account-card.add-account {
+/* Карточка добавления аккаунта */
+.add-account {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 60, 100, 0.5);
-    border: 2px dashed #80deea;
-    color: #80deea;
-    padding: 30px 20px;
-    height: auto;
-    width: 100%;
-    max-width: 520px;
-    min-height: 240px;
+    border: 2px dashed #cbd5e0;
+    background: rgba(255, 255, 255, 0.7);
+    color: #718096;
+    font-weight: 600;
+    text-align: center;
+}
+
+.add-account:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
 }
 
 .plus-icon {
-    font-size: 36px;
-    margin-bottom: 8px;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
-/* Профильная панель */
-.profile-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 100%;
-    background-color: #002f4b;
-    color: #e0eafc;
-    padding: 20px;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
-}
-
-.profile-panel.show {
-    transform: translateX(0);
-}
-
-.profile-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #0073a8;
-    color: #e0eafc;
+/* Визуальная карта */
+.card-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    position: relative;
+    margin-bottom: 1rem;
+    min-height: 160px;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bank-name {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-number-display {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin: 0.75rem 0;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.card-number-display:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-cvv-display {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    font-size: 0.8rem;
+}
+
+.card-cvv-display:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Информация о карте */
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+}
+
+.card-balance {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.card-status {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.account-number {
+    font-size: 0.8rem;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+.account-number:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Секции контента */
+.dashboard-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Панель фильтрации транзакций */
+.transactions-filter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f7fafc;
+    border-radius: 12px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-input,
+.filter-select {
+    padding: 0.6rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: white;
+    transition: border-color 0.2s ease;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Список транзакций */
+.transactions-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease;
+}
+
+.transaction-item:hover {
+    background-color: rgba(102, 126, 234, 0.05);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    flex: 1;
+}
+
+.transaction-title {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.transaction-details {
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+.transaction-amount {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.transaction-amount.positive {
+    color: #38a169;
+}
+
+.transaction-amount.negative {
+    color: #e53e3e;
+}
+
+/* Формы */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Кнопки */
+.btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.profile-panel h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #80deea;
-}
-
-.profile-panel p {
-    margin: 8px 0;
-    word-break: break-all;
-}
-
-.close-profile {
-    margin-top: 20px;
-    padding: 8px 12px;
-    background-color: #004d73;
-    color: #80deea;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.close-profile:hover {
-    background-color: #006c99;
-}
-
-/* Toast-уведомление */
-.copy-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #004d73;
-    color: #80deea;
-    padding: 10px 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    z-index: 2000;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    min-height: 44px; /* Минимальная высота для touch */
 }
 
-/* Модальный оверлей и форма добавления */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #cbd5e0;
+}
+
+.btn-danger {
+    background: #e53e3e;
+    color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #c53030;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+/* Модальные окна */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    padding: 1rem;
 }
 
-.add-account-modal {
-    background-color: #002f4b;
-    padding: 20px;
-    border-radius: 12px;
-    color: #e0eafc;
-    width: 320px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-}
-
-.add-account-modal h3 {
-    margin-top: 0;
-    color: #80deea;
-    margin-bottom: 10px;
-}
-
-.add-account-modal label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-.add-account-modal select {
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 500px;
     width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
-    margin-top: 5px;
-    background-color: #004a72;
-    color: #e0eafc;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.modal-buttons {
+.modal-header {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-.modal-buttons button {
-    padding: 8px 12px;
+.modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.modal-close {
+    background: none;
     border: none;
-    border-radius: 6px;
+    font-size: 1.5rem;
     cursor: pointer;
-    font-size: 14px;
-    background-color: #004d73;
-    color: #80deea;
+    color: #718096;
+    padding: 0.5rem;
+    line-height: 1;
 }
 
-.modal-buttons button:hover {
-    background-color: #006c99;
+.modal-close:hover {
+    color: #2d3748;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Профиль */
+.profile-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    overflow-y: auto;
+}
+
+.profile-panel.open {
+    right: 0;
+}
+
+.profile-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.profile-content {
+    padding: 1.5rem;
+}
+
+.profile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.profile-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Уведомления */
+.toast {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: #38a169;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1002;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.error {
+    background: #e53e3e;
+}
+
+.toast.warning {
+    background: #dd6b20;
+}
+
+/* Загрузка */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: #718096;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Селектор аккаунта */
+.account-selector {
+    margin-bottom: 1rem;
+}
+
+.account-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+}
+
+/* Дополнительные стили для адаптивного дашборда */
+
+/* Заголовок дашборда */
+.dashboard-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dashboard-info {
+    flex: 1;
+}
+
+.dashboard-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.profile-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.profile-button:hover {
+    transform: scale(1.05);
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-avatar.large {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #4a5568;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Мобильные табы */
+.dashboard-tabs.mobile-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.dashboard-tabs.mobile-open .tab-button {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2d3748;
+    border-radius: 12px;
+}
+
+.dashboard-tabs.mobile-open .tab-button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Информация профиля */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: #f7fafc;
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.info-item label {
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0;
+}
+
+.info-item span {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Модальные окна - дополнительные стили */
+.modal-body {
+    padding: 0;
+    margin: 1rem 0;
+}
+
+/* Транзакции - улучшенные стили */
+.transaction-item {
+    border-radius: 12px;
+    background: white;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-info h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.9rem;
+    color: #2d3748;
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.transaction-meta {
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+/* Фильтры транзакций - улучшенные стили */
+.filter-group label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.account-selector {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+}
+
+.account-selector label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.account-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    color: #2d3748;
+}
+
+/* Дополнительные адаптивные стили */
+
+/* Мобильные устройства - дополнительные стили */
+@media (max-width: 767px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .dashboard-header-content {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .dashboard-info {
+        min-width: 0;
+    }
+
+    .dashboard-title {
+        font-size: 1.1rem;
+        line-height: 1.3;
+        margin-bottom: 0.25rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .profile-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 0.8rem;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .account-select {
+        font-size: 16px; /* Предотвращает зум на iOS */
+    }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 480px) {
+    .dashboard-header-content {
+        gap: 0.5rem;
+    }
+
+    .dashboard-title {
+        font-size: 1rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+    }
+
+    .mobile-menu-toggle {
+        font-size: 1rem;
+        padding: 0.4rem;
+        min-height: 40px;
+        min-width: 40px;
+    }
+
+    .dashboard-tabs.mobile-open {
+        padding: 1rem;
+    }
+
+    .dashboard-tabs.mobile-open .tab-button {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Планшеты - дополнительные стили */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .dashboard-header-content {
+        gap: 1.5rem;
+    }
+
+    .profile-avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.4rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+/* Десктоп - дополнительные стили */
+@media (min-width: 1024px) {
+    .dashboard-header-content {
+        gap: 2rem;
+    }
+
+    .profile-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.6rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 1rem;
+    }
+
+    .profile-actions {
+        flex-direction: row;
+    }
+
+    .info-item {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Ландшафтная ориентация - дополнительные стили */
+@media (max-height: 500px) and (orientation: landscape) {
+    .dashboard-header {
+        padding: 0.5rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.1rem;
+    }
+
+    .dashboard-subtitle {
+        display: none;
+    }
+
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .dashboard-tabs.mobile-open {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .dashboard-tabs.mobile-open .tab-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Темная тема - дополнительные стили */
+@media (prefers-color-scheme: dark) {
+    .dashboard-header-content {
+        color: #e2e8f0;
+    }
+
+    .mobile-menu-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+    }
+
+    .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .info-item {
+        background: #2d3748;
+        border-left-color: #90cdf4;
+    }
+
+    .info-item label {
+        color: #a0aec0;
+    }
+
+    .info-item span {
+        color: #e2e8f0;
+    }
+
+    .profile-actions {
+        border-top-color: #4a5568;
+    }
+
+    .account-select {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+
+    .transaction-item {
+        background: #2d3748;
+    }
+}
+
+/* Анимации - дополнительные стили */
+@media (prefers-reduced-motion: reduce) {
+    .profile-button:hover,
+    .mobile-menu-toggle {
+        transform: none;
+    }
+
+    .dashboard-tabs.mobile-open {
+        transition: none;
+    }
+}
+
+/* Медиа-запросы для адаптивности */
+
+/* Мобильные устройства (до 480px) */
+@media (max-width: 479px) {
+    .user-dashboard {
+        padding: 0.25rem;
+    }
+
+    .dashboard-content {
+        gap: 0.75rem;
+    }
+
+    .dashboard-header {
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+
+    .dashboard-title {
+        font-size: 1.1rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .tab-button {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .account-wrapper {
+        flex: 0 0 250px;
+    }
+
+    .account-card {
+        padding: 1rem;
+        min-height: 280px;
+    }
+
+    .card-display {
+        padding: 0.75rem;
+        min-height: 140px;
+    }
+
+    .bank-name {
+        font-size: 0.9rem;
+    }
+
+    .card-number-display {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+    }
+
+    .card-balance {
+        font-size: 1.1rem;
+    }
+
+    .dashboard-section {
+        padding: 0.75rem;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    .transactions-filter {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .transaction-amount {
+        align-self: flex-end;
+    }
+
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .modal-title {
+        font-size: 1.1rem;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        font-size: 16px; /* Предотвращает зум на iOS */
+    }
+}
+
+/* Мобильные устройства (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    .user-dashboard {
+        padding: 0.5rem;
+    }
+
+    .dashboard-content {
+        gap: 1rem;
+    }
+
+    .account-wrapper {
+        flex: 0 0 270px;
+    }
+
+    .transactions-filter {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .transaction-item {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .modal-footer {
+        flex-direction: row;
+    }
+}
+
+/* Планшеты (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .user-dashboard {
+        padding: 1rem;
+    }
+
+    .dashboard-content {
+        gap: 1.25rem;
+    }
+
+    .dashboard-header {
+        padding: 1.25rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .account-wrapper {
+        flex: 0 0 300px;
+    }
+
+    .dashboard-section {
+        padding: 1.25rem;
+    }
+
+    .transactions-filter {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+/* Десктоп (1024px и выше) */
+@media (min-width: 1024px) {
+    .user-dashboard {
+        padding: 1.5rem;
+    }
+
+    .dashboard-content {
+        gap: 1.5rem;
+    }
+
+    .dashboard-header {
+        padding: 1.5rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.8rem;
+    }
+
+    .account-wrapper {
+        flex: 0 0 320px;
+    }
+
+    .dashboard-section {
+        padding: 1.5rem;
+    }
+
+    .transactions-filter {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+
+    .profile-panel {
+        width: 400px;
+    }
+}
+
+/* Большие экраны (1440px и выше) */
+@media (min-width: 1440px) {
+    .user-dashboard {
+        padding: 2rem;
+    }
+
+    .dashboard-content {
+        gap: 2rem;
+    }
+
+    .dashboard-header {
+        padding: 2rem;
+    }
+
+    .dashboard-title {
+        font-size: 2rem;
+    }
+
+    .account-wrapper {
+        flex: 0 0 350px;
+    }
+
+    .dashboard-section {
+        padding: 2rem;
+    }
+}
+
+/* Ландшафтная ориентация мобильных */
+@media (max-height: 500px) and (orientation: landscape) {
+    .user-dashboard {
+        padding: 0.5rem;
+    }
+
+    .dashboard-header {
+        padding: 0.75rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.2rem;
+    }
+
+    .account-card {
+        min-height: 200px;
+    }
+
+    .card-display {
+        min-height: 100px;
+        padding: 0.75rem;
+    }
+
+    .modal-content {
+        max-height: 80vh;
+    }
+}
+
+/* Темная тема (если поддерживается) */
+@media (prefers-color-scheme: dark) {
+    .user-dashboard {
+        background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    }
+
+    .dashboard-header,
+    .account-card,
+    .dashboard-section {
+        background: rgba(45, 55, 72, 0.95);
+        color: #e2e8f0;
+    }
+
+    .dashboard-title,
+    .section-title {
+        color: #e2e8f0;
+    }
+
+    .dashboard-subtitle,
+    .card-status {
+        color: #a0aec0;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea,
+    .filter-input,
+    .filter-select {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+
+    .transaction-item:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Фокус для доступности */
+.btn:focus,
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus,
+.tab-button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Плавная прокрутка */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Скрытие скроллбаров на мобильных */
+@media (max-width: 767px) {
+    .accounts-list::-webkit-scrollbar,
+    .transactions-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .accounts-list,
+    .transactions-list {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
 }

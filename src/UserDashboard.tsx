@@ -159,6 +159,7 @@ export const UserDashboard: React.FC = () => {
     const [accountCreating, setAccountCreating] = useState(false);
     const [accountError, setAccountError] = useState('');
     const [copyMessage, setCopyMessage] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Filter state
     const [filterStartDate, setFilterStartDate] = useState('');
@@ -234,6 +235,17 @@ export const UserDashboard: React.FC = () => {
         } finally {
             setAccountCreating(false);
         }
+    };
+
+    // Toggle mobile menu
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    // Close mobile menu when tab is selected
+    const handleTabSelect = (tab: 'accounts' | 'transactions' | 'payments' | 'transfers') => {
+        setSelectedTab(tab);
+        setIsMobileMenuOpen(false);
     };
 
     // Render accounts horizontally
@@ -417,88 +429,232 @@ export const UserDashboard: React.FC = () => {
     );
 
     return (
-        <>
-            <header className="top-bar">
-                <div
-                    className="user-avatar"
-                    onClick={() => setShowProfile(!showProfile)}
-                >
-                    {customer ? `${customer.firstName.charAt(0)}${customer.lastName.charAt(0)}`.toUpperCase() : ''}
+        <div className="user-dashboard">
+            {/* Copy toast */}
+            {copyMessage && (
+                <div className={`toast show`}>
+                    {copyMessage}
                 </div>
-            </header>
+            )}
 
-            <div className="dashboard-container">
-                <aside className="nav-sidebar">
-                    <button className={selectedTab === 'accounts' ? 'active' : ''}
-                            onClick={() => setSelectedTab('accounts')}>Акаунти
-                    </button>
-                    <button className={selectedTab === 'transactions' ? 'active' : ''}
-                            onClick={() => setSelectedTab('transactions')}>Транзакції
-                    </button>
-                    <button className={selectedTab === 'payments' ? 'active' : ''}
-                            onClick={() => setSelectedTab('payments')}>Платежі
-                    </button>
-                    <button className={selectedTab === 'transfers' ? 'active' : ''}
-                            onClick={() => setSelectedTab('transfers')}>Перекази
-                    </button>
-                </aside>
-                <main className="content-area">
-                    {loading && <p>Завантаження...</p>}
-                    {error && <p className="error-text">{error}</p>}
-                    {!loading && !error && (
-                        <>
-                            {selectedTab === 'accounts' && renderAccounts()}
-                            {selectedTab === 'transactions' && renderTransactions()}
-                            {selectedTab === 'payments' && renderPayments()}
-                            {selectedTab === 'transfers' && renderTransfers()}
-                        </>
-                    )}
-                </main>
-            </div>
-
-            <div className={`profile-panel ${showProfile ? 'show' : ''}`}>
-                <div className="profile-avatar">
-                    {customer ? `${customer.firstName.charAt(0)}${customer.lastName.charAt(0)}`.toUpperCase() : ''}
+            <div className="dashboard-content">
+                {/* Header */}
+                <div className="dashboard-header">
+                    <div className="dashboard-header-content">
+                        <div className="dashboard-info">
+                            <h1 className="dashboard-title">
+                                Вітаємо, {customer ? `${customer.firstName} ${customer.lastName}` : 'Користувач'}!
+                            </h1>
+                            <p className="dashboard-subtitle">
+                                Керуйте своїми фінансами легко та безпечно
+                            </p>
+                        </div>
+                        <div className="dashboard-actions">
+                            <button
+                                className="profile-button"
+                                onClick={() => setShowProfile(!showProfile)}
+                                aria-label="Відкрити профіль"
+                            >
+                                <div className="profile-avatar">
+                                    {customer ? `${customer.firstName.charAt(0)}${customer.lastName.charAt(0)}`.toUpperCase() : 'U'}
+                                </div>
+                            </button>
+                            <button
+                                className="mobile-menu-toggle d-lg-none"
+                                onClick={toggleMobileMenu}
+                                aria-label="Відкрити меню"
+                            >
+                                ☰
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <h3>Мої дані</h3>
-                {customer && (
-                    <>
-                        <p><strong>Ім’я:</strong> {customer.firstName}</p>
-                        <p><strong>Прізвище:</strong> {customer.lastName}</p>
-                        <p><strong>Email:</strong> {customer.email}</p>
-                        <p><strong>Телефон:</strong> {customer.phoneNumber}</p>
-                    </>
+
+                {/* Navigation Tabs */}
+                <div className={`dashboard-tabs ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+                    <button
+                        className={`tab-button ${selectedTab === 'accounts' ? 'active' : ''}`}
+                        onClick={() => handleTabSelect('accounts')}
+                    >
+                        💳 Рахунки
+                    </button>
+                    <button
+                        className={`tab-button ${selectedTab === 'transactions' ? 'active' : ''}`}
+                        onClick={() => handleTabSelect('transactions')}
+                    >
+                        📊 Транзакції
+                    </button>
+                    <button
+                        className={`tab-button ${selectedTab === 'payments' ? 'active' : ''}`}
+                        onClick={() => handleTabSelect('payments')}
+                    >
+                        💰 Платежі
+                    </button>
+                    <button
+                        className={`tab-button ${selectedTab === 'transfers' ? 'active' : ''}`}
+                        onClick={() => handleTabSelect('transfers')}
+                    >
+                        🔄 Перекази
+                    </button>
+                </div>
+
+                {/* Loading State */}
+                {loading && (
+                    <div className="loading">
+                        <div className="spinner"></div>
+                        <span>Завантаження даних...</span>
+                    </div>
                 )}
-                <button className="close-profile" onClick={() => setShowProfile(false)}>Закрити</button>
+
+                {/* Error State */}
+                {error && (
+                    <div className="dashboard-section">
+                        <div className="error-message">
+                            {error}
+                        </div>
+                        <button className="btn btn-primary" onClick={fetchCustomerData}>
+                            Спробувати знову
+                        </button>
+                    </div>
+                )}
+
+                {/* Content */}
+                {!loading && !error && (
+                    <div className="dashboard-grid">
+                        {selectedTab === 'accounts' && (
+                            <div className="dashboard-section">
+                                <h2 className="section-title">Мої рахунки</h2>
+                                {renderAccounts()}
+                            </div>
+                        )}
+
+                        {selectedTab === 'transactions' && (
+                            <div className="dashboard-section">
+                                <h2 className="section-title">Транзакції</h2>
+                                {renderTransactions()}
+                            </div>
+                        )}
+
+                        {selectedTab === 'payments' && (
+                            <div className="dashboard-section">
+                                <h2 className="section-title">Платежі</h2>
+                                {renderPayments()}
+                            </div>
+                        )}
+
+                        {selectedTab === 'transfers' && (
+                            <div className="dashboard-section">
+                                <h2 className="section-title">Перекази</h2>
+                                {renderTransfers()}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
 
-            {/* Toast */}
-            {copyMessage && <div className="copy-toast">{copyMessage}</div>}
+            {/* Profile Panel */}
+            <div className={`profile-overlay ${showProfile ? 'open' : ''}`} onClick={() => setShowProfile(false)}></div>
+            <div className={`profile-panel ${showProfile ? 'open' : ''}`}>
+                <div className="profile-header">
+                    <div className="profile-avatar large">
+                        {customer ? `${customer.firstName.charAt(0)}${customer.lastName.charAt(0)}`.toUpperCase() : 'U'}
+                    </div>
+                    <h3>Профіль користувача</h3>
+                    <button
+                        className="modal-close"
+                        onClick={() => setShowProfile(false)}
+                        aria-label="Закрити профіль"
+                    >
+                        ×
+                    </button>
+                </div>
+                <div className="profile-content">
+                    {customer && (
+                        <div className="profile-info">
+                            <div className="info-item">
+                                <label>Ім'я:</label>
+                                <span>{customer.firstName}</span>
+                            </div>
+                            <div className="info-item">
+                                <label>Прізвище:</label>
+                                <span>{customer.lastName}</span>
+                            </div>
+                            <div className="info-item">
+                                <label>Email:</label>
+                                <span>{customer.email}</span>
+                            </div>
+                            <div className="info-item">
+                                <label>Телефон:</label>
+                                <span>{customer.phoneNumber}</span>
+                            </div>
+                        </div>
+                    )}
+                    <div className="profile-actions">
+                        <button className="btn btn-secondary" onClick={() => setShowProfile(false)}>
+                            Закрити
+                        </button>
+                        <button className="btn btn-danger" onClick={() => {
+                            localStorage.removeItem('accessToken');
+                            window.location.reload();
+                        }}>
+                            Вийти
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-            {/* Modal for adding account */}
+            {/* Add Account Modal */}
             {showAddModal && (
                 <div className="modal-overlay">
-                    <div className="add-account-modal">
-                        <h3>Створити рахунок</h3>
-                        <label>
-                            Тип валюти:
-                            <select value={newAccountType}
-                                    onChange={(e) => setNewAccountType((e.target as HTMLSelectElement).value)}>
-                                <option value="UAH">UAH</option>
-                                <option value="USD">USD</option>
-                                <option value="EUR">EUR</option>
-                            </select>
-                        </label>
-                        {accountError && <p className="error-text">{accountError}</p>}
-                        <div className="modal-buttons">
-                            <button onClick={handleAddAccount} disabled={accountCreating}>
-                                {accountCreating ? 'Створення...' : 'Створити'}
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h3 className="modal-title">Створити новий рахунок</h3>
+                            <button
+                                className="modal-close"
+                                onClick={() => setShowAddModal(false)}
+                                aria-label="Закрити модальне вікно"
+                            >
+                                ×
                             </button>
-                            <button onClick={() => setShowAddModal(false)}>Скасувати</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Тип валюти:</label>
+                                <select
+                                    className="form-select"
+                                    value={newAccountType}
+                                    onChange={(e) => setNewAccountType(e.target.value)}
+                                >
+                                    <option value="UAH">Гривня (UAH)</option>
+                                    <option value="USD">Долар США (USD)</option>
+                                    <option value="EUR">Євро (EUR)</option>
+                                </select>
+                            </div>
+                            {accountError && (
+                                <div className="error-message">
+                                    {accountError}
+                                </div>
+                            )}
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                className="btn btn-secondary"
+                                onClick={() => setShowAddModal(false)}
+                            >
+                                Скасувати
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleAddAccount}
+                                disabled={accountCreating}
+                            >
+                                {accountCreating && <div className="loading-spinner"></div>}
+                                {accountCreating ? 'Створення...' : 'Створити рахунок'}
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
