@@ -17,7 +17,7 @@ interface Account {
 
 interface Transaction {
     sender: { firstName: string; lastName: string };
-    receiver: { firstName: string; lastName: string };
+    receiver: { firstName: string; lastName: string; accountNumber: string };
     amount: number;
     description: string;
     transactionDate: string;
@@ -347,17 +347,25 @@ export const UserDashboard: React.FC = () => {
                     {filtered.length > 0 ? (
                         <>
                             {filtered.map((tr, idx) => {
-                                const isIncoming = tr.status === 'COMPLETED';
+                                // Определяем, является ли это входящей транзакцией
+                                // Проверяем по номеру аккаунта получателя
+                                const currentAccountNumber = acc.accountNumber;
+                                const isIncoming = tr.receiver.accountNumber === currentAccountNumber;
                                 const arrow = isIncoming ? '↓' : '↑';
-                                const statusLabel = isIncoming ? 'Завершено' : 'Скасовано';
+                                const statusLabel = tr.status === 'COMPLETED' ? 'Завершено' : 'Скасовано';
+                                const transactionType = isIncoming ? 'incoming' : 'outgoing';
 
                                 return (
-                                    <div key={idx} className="transaction-card">
+                                    <div
+                                        key={idx}
+                                        className="transaction-card"
+                                        data-type={transactionType}
+                                    >
                                         <div className="transaction-header">
                                             <span className="arrow">{arrow}</span>
                                             <span>
-              {isIncoming ? 'Вхід' : 'Вихід'} — {tr.amount.toLocaleString()} {tr.currencyCode}
-            </span>
+                                                {isIncoming ? 'Надходження' : 'Витрати'} — {tr.amount.toLocaleString()} {tr.currencyCode}
+                                            </span>
                                         </div>
 
                                         <div className="transaction-body">
@@ -373,15 +381,15 @@ export const UserDashboard: React.FC = () => {
                                         </div>
 
                                         <div className="transaction-footer">
-            <span className={`status ${isIncoming ? 'complete' : 'cancelled'}`}>
-              {statusLabel}
-            </span>
+                                            <span className={`status ${tr.status === 'COMPLETED' ? 'complete' : 'cancelled'}`}>
+                                                {statusLabel}
+                                            </span>
                                             <span>
-              Дата: {new Date(tr.transactionDate).toLocaleString('uk-UA', {
-                                                day: '2-digit', month: '2-digit', year: 'numeric',
-                                                hour: '2-digit', minute: '2-digit'
-                                            })}
-            </span>
+                                                Дата: {new Date(tr.transactionDate).toLocaleString('uk-UA', {
+                                                    day: '2-digit', month: '2-digit', year: 'numeric',
+                                                    hour: '2-digit', minute: '2-digit'
+                                                })}
+                                            </span>
                                         </div>
                                     </div>
                                 );
